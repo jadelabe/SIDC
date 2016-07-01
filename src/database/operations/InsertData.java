@@ -33,11 +33,11 @@ public class InsertData {
 	public static boolean writeAntropometricas(Antropometricas a) throws Exception {
 		try {
 			return Database.updateInfo(
-					"INSERT INTO Antropometricas ( talla, peso, cintura, cadera, pecho, pliegue_escapular, pliegue_bicipital, pliegue_tricipital, pliegue_abdominal, IMC, IGC, TMB, Paciente_ID) VALUES("
-							+ a.getTalla() + ", " + a.getPeso() + ", " + a.getCintura() + ", " + a.getCadera() + ", "
-							+ a.getPecho() + ", " + a.getPliegue_escapular() + ", " + a.getPliegue_bicipital() + ", "
-							+ a.getPliegue_tricipital() + ", " + a.getPligue_abdominal() + ", " + a.getImc() + ", "
-							+ a.getIgc() + ", " + a.getTmb() + ", (select ID from Paciente where ID = "
+					"INSERT INTO Antropometricas ( talla, peso, cintura, cadera, pecho, pliegue_escapular, pliegue_bicipital, pliegue_tricipital, pliegue_abdominal, IMC, IGC, TMB, Paciente_ID) VALUES('"
+							+ a.getTalla() + "', '" + a.getPeso() + "', '" + a.getCintura() + "', '" + a.getCadera() + "', '"
+							+ a.getPecho() + "', '" + a.getPliegue_escapular() + "', '" + a.getPliegue_bicipital() + "', '"
+							+ a.getPliegue_tricipital() + "', '" + a.getPligue_abdominal() + "', '" + a.getImc() + "', '"
+							+ a.getIgc() + "', '" + a.getTmb() + "', (select ID from Paciente where ID = "
 							+ a.getPaciente_ID() + "))");
 		} catch (Exception e) {
 			System.out.println(e);
@@ -50,8 +50,8 @@ public class InsertData {
 	public static boolean writeHistorial(Historial h) throws Exception {
 		try {
 			return Database
-					.updateInfo("INSERT INTO Historial ( nombre, apellidos, Paciente_ID, Antropometricas_Fecha) VALUES("
-							+ h.getNombre() + ", " + h.getApellidos() + ", (select ID from Paciente where nombre = "
+					.updateInfo("INSERT INTO Historial ( nombre, apellidos, Paciente_ID, Antropometricas_Fecha) VALUES('"
+							+ h.getNombre() + "', '" + h.getApellidos() + "', (select ID from Paciente where nombre = "
 							+ h.getNombre() + " AND  apellidos = " + h.getApellidos()
 							+ ")), (select fecha from Antropometricas where Paciente_ID = " + h.getPaciente_ID());
 		} catch (Exception e) {
@@ -62,9 +62,9 @@ public class InsertData {
 
 	public static boolean writeLoginAdmin(Login l) throws Exception {
 		try {
-			return Database.updateInfo("INSERT INTO Login ( email, password, Profesional_Sanitario_ID) VALUES("
-					+ l.getEmail() + ", " + l.getPassword() + ", (select ID from Profesional_Sanitario where email = "
-					+ l.getEmail() + "))");
+			return Database.updateInfo("INSERT INTO Login ( email, password, Profesional_Sanitario_ID) VALUES('"
+					+ l.getEmail() + "', '" + l.getPassword() + "', (select ID from Profesional_Sanitario where email = '"
+					+ l.getEmail() + "'))");
 		} catch (Exception e) {
 			System.out.println(e);
 			return false;
@@ -74,8 +74,8 @@ public class InsertData {
 	public static boolean writeLoginUser(Login l) throws Exception {
 		try {
 			return Database.updateInfo(
-					"INSERT INTO Login ( email, password, Profesional_Sanitario_ID) VALUES(" + l.getEmail() + ", "
-							+ l.getPassword() + ", (select ID from Paciente where email = " + l.getEmail() + "))");
+					"INSERT INTO Login ( email, password, Profesional_Sanitario_ID) VALUES('" + l.getEmail() + "', '"
+							+ l.getPassword() + "', (select ID from Paciente where email = '" + l.getEmail() + "'))");
 		} catch (Exception e) {
 			System.out.println(e);
 			return false;
@@ -84,8 +84,8 @@ public class InsertData {
 
 	public static boolean writeProfesionalSanitario(Profesional_Sanitario ps) throws Exception {
 		try {
-			return Database.updateInfo("INSERT INTO Profesional_Sanitario (email, nombre, apellidos, direccion, telefono) VALUES("
-					+ ps.getEmail() + ", " + ps.getNombre() + ", " + ps.getApellidos() + ", " + ps.getDireccion()+ ", " + ps.getTelefono() + ")");
+			return Database.updateInfo("INSERT INTO Profesional_Sanitario (email, nombre, apellidos, direccion, telefono) VALUES ('"
+					+ ps.getEmail() + "', '" + ps.getNombre() + "', '" + ps.getApellidos() + "', '" + ps.getDireccion()+ "', '" + ps.getTelefono() + "')");
 		} catch (Exception e) {
 			System.out.println(e);
 			return false;
@@ -95,10 +95,10 @@ public class InsertData {
 	public static boolean writePaciente(Paciente p, int profesional_sanitario) throws Exception {
 		try {
 			return Database.updateInfo(
-					"INSERT INTO Paciente (nombre, apellidos, email, direccion, fecha_nacimiento, telefono) VALUES("
-							+ p.getNombre() + ", " + p.getApellidos() + ", " + p.getEmail() + ", "
-							+ p.getDireccion() + ", " + p.getFecha_nacimiento() + ", "
-							+ p.getTelefono() +")");
+					"INSERT INTO Paciente (nombre, apellidos, email, direccion, fecha_nacimiento, telefono) VALUES('"
+							+ p.getNombre() + "', '" + p.getApellidos() + "', '" + p.getEmail() + "', '"
+							+ p.getDireccion() + "', '" + p.getFecha_nacimiento() + "', '"
+							+ p.getTelefono() +"')");
 		} catch (Exception e) {
 			System.out.println(e);
 			return false;
