@@ -189,7 +189,7 @@ public class NuevoUsuarioDialog extends JDialog {
 									InsertData.writePaciente(p, 0);
 
 								} else if (rdbtnProfesional.isSelected()) {
-									Profesional_Sanitario ps = new Profesional_Sanitario(txtNuevadirec.getText(),
+									Profesional_Sanitario ps = new Profesional_Sanitario(textField.getText(),
 											txtNuevonombre.getText(), txtNuevoApellido.getText(),
 											txtNuevadirec.getText(), Integer.parseInt(txtNuevotelf.getText()));
 									InsertData.writeProfesionalSanitario(ps);
@@ -200,7 +200,7 @@ public class NuevoUsuarioDialog extends JDialog {
 
 								setVisible(false);
 							} else {
-								// contraseñas no coinciden
+								// contraseï¿½as no coinciden
 							}
 
 						} catch (Exception e) {

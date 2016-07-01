@@ -174,7 +174,7 @@ public class LoginWindow extends JFrame {
 		JMenuItem mntmManualUsuario = new JMenuItem("Ayuda de Usuario");
 		mntmManualUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				URL url = ClassLoader.getSystemResource("LoginHelp2.html");
+				URL url = ClassLoader.getSystemResource("LoginHelp.html");
 				// URL loginHelp =
 				// ClassLoader.getSystemResource("LoginHelp.html");
 				/*
