@@ -61,7 +61,7 @@ public class LoginWindow extends JFrame {
 	 */
 	private void initialize() {
 		setTitle("SI Dieta en Casa");
-		setSize(400, 250);
+		setSize(400, 275);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
