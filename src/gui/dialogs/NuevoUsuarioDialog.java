@@ -56,7 +56,7 @@ public class NuevoUsuarioDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public NuevoUsuarioDialog() {
-		setSize(463, 465);
+		setSize(463, 528);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -200,7 +200,7 @@ public class NuevoUsuarioDialog extends JDialog {
 
 								setVisible(false);
 							} else {
-								// contraseñas no coinciden
+								// contraseï¿½as no coinciden
 							}
 
 						} catch (Exception e) {

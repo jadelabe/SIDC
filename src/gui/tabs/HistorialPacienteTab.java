@@ -61,14 +61,18 @@ public class HistorialPacienteTab extends JInternalFrame {
 		
 		fillTable(userAntrop, tableModel);
 			
-		JButton btnCrearGrafica = new JButton("Generar Grafica");
+		/*JButton btnCrearGrafica = new JButton("Generar Grafica");
+		btnCrearGrafica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		GridBagConstraints gbc_btnCrearGrafica = new GridBagConstraints();
 		gbc_btnCrearGrafica.anchor = GridBagConstraints.EAST;
 		gbc_btnCrearGrafica.fill = GridBagConstraints.VERTICAL;
 		gbc_btnCrearGrafica.gridx = 0;
 		gbc_btnCrearGrafica.gridy = 1;
 		getContentPane().add(btnCrearGrafica, gbc_btnCrearGrafica);
-		
+		*/
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
