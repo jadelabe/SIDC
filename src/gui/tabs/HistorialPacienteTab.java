@@ -8,14 +8,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 import database.classes.Paciente;
+import database.operations.SearchData;
 import gui.frames.HelpWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -31,15 +35,21 @@ public class HistorialPacienteTab extends JInternalFrame {
 	 */
 	public HistorialPacienteTab(Paciente currentUser) {
 		setFrameIcon(null);
-		setSize(700, 550);
+		setSize(800, 550);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{624, 0};
 		gridBagLayout.rowHeights = new int[]{366, 27, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
-		table = new JTable();
+		DefaultTableModel tableModel = null;   
+		String col[] = {"Fecha","Talla","Peso", "Cintura", "Cadera", "Pecho"
+				, "ESCAP", "BICEP", "TRICEP", "ABDOM", "IMC", "IGC"};
+		tableModel = new DefaultTableModel(col, 0);   // The 0 argument is number rows.
+		tableModel.addRow(col);
+		
+		JTable table = new JTable(tableModel);
 		GridBagConstraints gbc_table = new GridBagConstraints();
 		gbc_table.fill = GridBagConstraints.BOTH;
 		gbc_table.insets = new Insets(0, 0, 5, 0);
@@ -47,6 +57,10 @@ public class HistorialPacienteTab extends JInternalFrame {
 		gbc_table.gridy = 0;
 		getContentPane().add(table, gbc_table);
 		
+		ArrayList<String[]> userAntrop = SearchData.search("Antropometricas", "Paciente_ID", Integer.toString(currentUser.getID()));
+		
+		fillTable(userAntrop, tableModel);
+			
 		JButton btnCrearGrafica = new JButton("Generar Grafica");
 		GridBagConstraints gbc_btnCrearGrafica = new GridBagConstraints();
 		gbc_btnCrearGrafica.anchor = GridBagConstraints.EAST;
@@ -96,5 +110,41 @@ public class HistorialPacienteTab extends JInternalFrame {
 		});
 		mntmAyuda.add(mntmInformacinVersion);
 
+	}
+	private void fillTable(ArrayList<String[]> userAntrop, DefaultTableModel table) {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < userAntrop.size(); i++) {
+			String fecha = userAntrop.get(i)[0];
+			String talla = userAntrop.get(i)[1];
+			String peso = userAntrop.get(i)[2];
+			String cintura = userAntrop.get(i)[3];
+			String cadera = userAntrop.get(i)[4];
+			String pecho = userAntrop.get(i)[5];
+			String p_esc = userAntrop.get(i)[6];
+			String p_bic = userAntrop.get(i)[7];
+			String p_tri = userAntrop.get(i)[8];
+			String p_abd = userAntrop.get(i)[9];
+			String imc = userAntrop.get(i)[10];
+			String igc = userAntrop.get(i)[11];
+			
+			Object[] data = {fecha, talla, peso, cintura, cadera, pecho, p_esc,
+					p_bic, p_tri, p_abd, imc, igc};
+			
+			table.addRow(data);
+			
+		}
+	}
+	private void initTable(DefaultTableModel tableModel) {
+		String col[] = {"Fecha","Talla","Peso", "Cintura", "Cadera", "Pecho"
+				, "ESCAP", "BICEP", "TRICEP", "ABDOM", "IMC", "IGC"};
+		tableModel = new DefaultTableModel(col, 0);   // The 0 argument is number rows.
+
+		JTable table = new JTable(tableModel);
+		GridBagConstraints gbc_table = new GridBagConstraints();
+		gbc_table.fill = GridBagConstraints.BOTH;
+		gbc_table.insets = new Insets(0, 0, 5, 0);
+		gbc_table.gridx = 0;
+		gbc_table.gridy = 0;
+		getContentPane().add(table, gbc_table);
 	}
 }
