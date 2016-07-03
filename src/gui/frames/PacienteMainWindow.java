@@ -53,9 +53,9 @@ public class PacienteMainWindow extends JFrame{
 		tabbedPane.addTab("Mi Historial", null, tabHistorial, null);
 		tabHistorial.setVisible(true);
 		
-		/*CitasPacienteTab tabCitas = new CitasPacienteTab();
+		CitasPacienteTab tabCitas = new CitasPacienteTab();
 		tabbedPane.addTab("Mis Citas", null, tabCitas, null);
-		tabCitas.setVisible(true);*/
+		tabCitas.setVisible(true);
 		
 		setVisible(true);
 	}

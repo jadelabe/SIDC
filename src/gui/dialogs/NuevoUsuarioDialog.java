@@ -56,7 +56,7 @@ public class NuevoUsuarioDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public NuevoUsuarioDialog() {
-		setSize(463, 528);
+		setSize(463, 465);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -189,7 +189,7 @@ public class NuevoUsuarioDialog extends JDialog {
 									InsertData.writePaciente(p, 0);
 
 								} else if (rdbtnProfesional.isSelected()) {
-									Profesional_Sanitario ps = new Profesional_Sanitario(txtNuevadirec.getText(),
+									Profesional_Sanitario ps = new Profesional_Sanitario(textField.getText(),
 											txtNuevonombre.getText(), txtNuevoApellido.getText(),
 											txtNuevadirec.getText(), Integer.parseInt(txtNuevotelf.getText()));
 									InsertData.writeProfesionalSanitario(ps);
