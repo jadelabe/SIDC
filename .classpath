@@ -16,6 +16,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/Jadelabe/git/SIDC/lib/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jadelabe/git/SIDC/lib/mysql-connector-java-5.1.39-bin.jar"/>
 	<classpathentry kind="con" path="com.google.gdt.eclipse.managedapis.MANAGED_API_CONTAINER/calendar-v3r165lv1.18.0-rc"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
