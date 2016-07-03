@@ -1,9 +1,5 @@
 package database.operations;
 
-/*import java.sql.Date;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;*/
-
 import database.Database;
 import database.classes.Antropometricas;
 import database.classes.Historial;
@@ -12,16 +8,14 @@ import database.classes.Paciente;
 import database.classes.Profesional_Sanitario;
 
 public class InsertData {
-/*
+
 	public static void main(String[] args) throws Exception{
 		Profesional_Sanitario ps = new Profesional_Sanitario("admin", "nomadmin", "apeadmin", "C/ La piruleta", 666777888);
 		writeProfesionalSanitario(ps);
-		byte[] salt = security.Encryption.generateSalt();
-		String password = security.Encryption.encryptPassword("admin", salt);
-		Login l = new Login("admin", password, 1, 1);
+		Login l = new Login("admin", "admin", 1, -1);
 		writeLoginAdmin(l);
 	}
-*/
+
 	// Da problemas al escribir de seguido al tener como clave primaria una
 	// marca de tiempo
 	public static boolean writeAntropometricas(Antropometricas a) throws Exception {
@@ -45,9 +39,9 @@ public class InsertData {
 		try {
 			return Database
 					.updateInfo("INSERT INTO Historial ( nombre, apellidos, Paciente_ID, Antropometricas_Fecha) VALUES('"
-							+ h.getNombre() + "', '" + h.getApellidos() + "', (select ID from Paciente where nombre = "
-							+ h.getNombre() + " AND  apellidos = " + h.getApellidos()
-							+ ")), (select fecha from Antropometricas where Paciente_ID = " + h.getPaciente_ID());
+							+ h.getNombre() + "', '" + h.getApellidos() + "', (select ID from Paciente where nombre = '"
+							+ h.getNombre() + "' AND  apellidos = '" + h.getApellidos()
+							+ "'), (select MAX(fecha) from Antropometricas where Paciente_ID = " + h.getPaciente_ID()+ "))");
 		} catch (Exception e) {
 			System.out.println(e);
 			return false;
@@ -69,9 +63,9 @@ public class InsertData {
 	public static boolean writeLoginUser(Login l) throws Exception {
 		try {
 			byte[] salt = security.Encryption.generateSalt();
-			return Database.updateInfo(
-					"INSERT INTO Login ( email, password, Profesional_Sanitario_ID) VALUES('" + l.getEmail() + "', '"
-							+ security.Encryption.encryptPassword(l.getPassword(), salt) + "', (select ID from Paciente where email = '" + l.getEmail() + "'))");
+			return Database.updateInfo("INSERT INTO Login ( email, password, Profesional_Sanitario_ID, Paciente_ID) VALUES('"
+					+ l.getEmail() + "', '"	+ security.Encryption.encryptPassword(l.getPassword(), salt) + "',(select ID from profesional_sanitario where email = 'admin'), (select ID from Paciente where email = '" 
+					+ l.getEmail() + "'))");
 		} catch (Exception e) {
 			System.out.println(e);
 			return false;
@@ -91,10 +85,10 @@ public class InsertData {
 	public static boolean writePaciente(Paciente p, int profesional_sanitario) throws Exception {
 		try {
 			return Database.updateInfo(
-					"INSERT INTO Paciente (nombre, apellidos, email, direccion, fecha_nacimiento, telefono) VALUES('"
+					"INSERT INTO Paciente (nombre, apellidos, email, direccion, fecha_nacimiento, telefono, Profesional_Sanitario_ID) VALUES('"
 							+ p.getNombre() + "', '" + p.getApellidos() + "', '" + p.getEmail() + "', '"
 							+ p.getDireccion() + "', '" + p.getFecha_nacimiento() + "', '"
-							+ p.getTelefono() +"')");
+							+ p.getTelefono() +"', '"+ profesional_sanitario +"')");
 		} catch (Exception e) {
 			System.out.println(e);
 			return false;

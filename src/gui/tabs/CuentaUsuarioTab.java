@@ -67,7 +67,7 @@ public class CuentaUsuarioTab extends JInternalFrame {
 		JButton btnChangeData = new JButton("Modificar Datos");
 		btnChangeData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ModificarDatosDialog.createAndShowDialog();
+				ModificarDatosDialog.createAndShowDialog(currentUser.getEmail());
 				actualizarInfoPaciente();
 			}
 
@@ -143,7 +143,7 @@ public class CuentaUsuarioTab extends JInternalFrame {
 		JButton btnChangePassword = new JButton("Cambiar Contraseña");
 		btnChangePassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ModificarPassDialog.createAndShowDialog();
+				ModificarPassDialog.createAndShowDialog(currentUser.getEmail());
 			}
 		});
 		GridBagConstraints gbc_btnChangePassword = new GridBagConstraints();

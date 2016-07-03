@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
 
+import database.classes.Login;
 import database.classes.Paciente;
 import database.classes.Profesional_Sanitario;
 import database.operations.InsertData;
@@ -55,8 +56,8 @@ public class NuevoUsuarioDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public NuevoUsuarioDialog() {
-		setSize(463, 465);
+	public NuevoUsuarioDialog(int adminID) {
+		setSize(463, 528);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -186,13 +187,16 @@ public class NuevoUsuarioDialog extends JDialog {
 											new Date(dateChoser.getDate().getTime()), 0,
 											Integer.parseInt(txtNuevotelf.getText()));
 
-									InsertData.writePaciente(p, 0);
-
+									InsertData.writePaciente(p, adminID);
+									Login l = new Login(textField.getText(), txtPassword.getText(), -1, 1);
+									InsertData.writeLoginUser(l);
 								} else if (rdbtnProfesional.isSelected()) {
-									Profesional_Sanitario ps = new Profesional_Sanitario(textField.getText(),
+									Profesional_Sanitario ps = new Profesional_Sanitario(txtNuevadirec.getText(),
 											txtNuevonombre.getText(), txtNuevoApellido.getText(),
 											txtNuevadirec.getText(), Integer.parseInt(txtNuevotelf.getText()));
 									InsertData.writeProfesionalSanitario(ps);
+									Login l = new Login(textField.getText(), txtPassword.getText(), 1, -1);
+									InsertData.writeLoginAdmin(l);
 								}
 								else{
 									//no se selecciono tipo de usuario
@@ -204,7 +208,7 @@ public class NuevoUsuarioDialog extends JDialog {
 							}
 
 						} catch (Exception e) {
-							System.out.println(e);
+							e.printStackTrace();
 						}
 					}
 				});
@@ -226,8 +230,8 @@ public class NuevoUsuarioDialog extends JDialog {
 
 	}
 
-	public static void createAndShowDialog() {
-		NuevoUsuarioDialog dialog = new NuevoUsuarioDialog();
+	public static void createAndShowDialog(int adminID) {
+		NuevoUsuarioDialog dialog = new NuevoUsuarioDialog(adminID);
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);
 	}

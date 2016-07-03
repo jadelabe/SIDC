@@ -24,7 +24,6 @@ public class Encryption {
 
 	public static boolean checkPassword(String hash, String input) throws NoSuchAlgorithmException {
 		byte[] salt = new byte[20];
-		System.out.println(hash.length());
 		for (int i = 0; i < 20; i++) {
 			salt[i] = stringToByte(hash)[i];
 		}

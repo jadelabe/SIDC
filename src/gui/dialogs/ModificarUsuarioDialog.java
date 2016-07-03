@@ -15,6 +15,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
+import database.Database;
+
 public class ModificarUsuarioDialog extends JDialog {
 
 	/**
@@ -44,10 +46,10 @@ public class ModificarUsuarioDialog extends JDialog {
 			txtCurrentUser.setColumns(10);
 		}
 
-		JLabel lblCurrentUser = new JLabel("Usuario Actual");
+		JLabel lblCurrentUser = new JLabel("Email Actual");
 
-		JLabel lblApellidos = new JLabel("Nuevo Usuario");
-		JLabel lblNewUser2 = new JLabel("Repita nuevo usuario");
+		JLabel lblApellidos = new JLabel("Nuevo Email");
+		JLabel lblNewUser2 = new JLabel("Repita nuevo Email");
 
 		txConfirmUser = new JTextField();
 		txConfirmUser.setColumns(10);
@@ -92,6 +94,16 @@ public class ModificarUsuarioDialog extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						setVisible(false);
+						try {
+							Database.updateInfo("update login set email = replace(email, '"+ txtCurrentUser.getText() +
+									"', '" + txtNewUser.getText() + "')");
+							Database.updateInfo("update paciente set email = replace(email, '"+ txtCurrentUser.getText() +
+									"', '" + txtNewUser.getText() + "')");
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						dispose();
+						
 					}
 				});
 				buttonPane.add(okButton);

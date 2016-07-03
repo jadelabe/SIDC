@@ -66,7 +66,7 @@ public class GestionCuentasTab extends JInternalFrame {
 		gbc_lblShowCorreo.gridy = 1;
 		getContentPane().add(lblShowCorreo, gbc_lblShowCorreo);
 		
-		JButton btnChangeUser = new JButton("Cambiar Usuario");
+		JButton btnChangeUser = new JButton("Cambiar Email");
 		btnChangeUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ModificarUsuarioDialog.createAndShowDialog();
@@ -83,7 +83,7 @@ public class GestionCuentasTab extends JInternalFrame {
 		JButton btnChagePassword = new JButton("Cambiar Contraseña");
 		btnChagePassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ModificarPassDialog.createAndShowDialog();
+				ModificarPassDialog.createAndShowDialog(currentUser.getEmail());
 			}
 		});
 		GridBagConstraints gbc_btnChagePassword = new GridBagConstraints();
@@ -108,14 +108,14 @@ public class GestionCuentasTab extends JInternalFrame {
 		JButton btnAddUser = new JButton("Añadir Usuario");
 		btnAddUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NuevoUsuarioDialog.createAndShowDialog();
+				NuevoUsuarioDialog.createAndShowDialog(currentUser.getID());
 			}
 		});
 		
 		JButton btnChangeData = new JButton("Modificar Datos");
 		btnChangeData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ModificarDatosDialog.createAndShowDialog();
+				ModificarDatosDialog.createAndShowDialog(currentUser.getEmail());
 			}
 		});
 		
@@ -167,19 +167,6 @@ public class GestionCuentasTab extends JInternalFrame {
 		gbc_btnBackup.gridx = 1;
 		gbc_btnBackup.gridy = 10;
 		getContentPane().add(btnBackup, gbc_btnBackup);
-		
-		JButton btnDeleteUser = new JButton("Eliminar Usuario");
-		btnDeleteUser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		GridBagConstraints gbc_btnDeleteUser = new GridBagConstraints();
-		gbc_btnDeleteUser.insets = new Insets(0, 0, 0, 5);
-		gbc_btnDeleteUser.anchor = GridBagConstraints.NORTH;
-		gbc_btnDeleteUser.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnDeleteUser.gridx = 4;
-		gbc_btnDeleteUser.gridy = 10;
-		getContentPane().add(btnDeleteUser, gbc_btnDeleteUser);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);

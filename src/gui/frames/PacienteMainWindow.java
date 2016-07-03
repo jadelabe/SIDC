@@ -6,11 +6,11 @@ import javax.swing.JTabbedPane;
 
 import database.classes.Paciente;
 import database.operations.SearchData;
-import gui.tabs.CitasPacienteTab;
 import gui.tabs.CuentaUsuarioTab;
 import gui.tabs.HistorialPacienteTab;
 
 import java.awt.CardLayout;
+import java.text.ParseException;
 
 public class PacienteMainWindow extends JFrame{
 	/**
@@ -23,8 +23,9 @@ public class PacienteMainWindow extends JFrame{
 	/**
 	 * Create the application.
 	 * @param id 
+	 * @throws ParseException 
 	 */
-	public PacienteMainWindow(int id) {
+	public PacienteMainWindow(int id) throws ParseException {
 		this.userID = id;
 		ArrayList<String[]> userInfo = SearchData.search("Paciente", "ID", Integer.toString(userID));
 		currentUser = new Paciente(userInfo);
@@ -53,9 +54,9 @@ public class PacienteMainWindow extends JFrame{
 		tabbedPane.addTab("Mi Historial", null, tabHistorial, null);
 		tabHistorial.setVisible(true);
 		
-		CitasPacienteTab tabCitas = new CitasPacienteTab();
+		/*CitasPacienteTab tabCitas = new CitasPacienteTab();
 		tabbedPane.addTab("Mis Citas", null, tabCitas, null);
-		tabCitas.setVisible(true);
+		tabCitas.setVisible(true);*/
 		
 		setVisible(true);
 	}

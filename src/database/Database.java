@@ -15,10 +15,10 @@ public class Database {
 		try {
 			/*if(backup("C:\\Users\\Jadelabe\\Downloads\\")){
 				System.out.println("Backup Correcto");
-			}*/
-			if(restore("C:\\Users\\Jadelabe\\Downloads\\SIDC-03-07-2016.sql")){
-				System.out.println("Restore Correcto");
 			}
+			if(restore("C:\\Users\\Jadelabe\\Downloads\\bak.sql")){
+				System.out.println("Restore Correcto");
+			}*/
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -30,11 +30,11 @@ public class Database {
 	
 	private static Connection getConnection() throws Exception {
 		try {
-			String driver = "org.sqlite.JDBC";
-			String url = "jdbc:mysql://localhost/SIDC";
+			//String driver = "org.sqlite.JDBC";
+			String url = "jdbc:mysql://localhost/SIDC?useSSL=false";
 			String username = "root";
 			String password = "admin";
-			Class.forName(driver);
+			//Class.forName(driver);
 			Connection conn = DriverManager.getConnection(url, username, password);
 			return conn;
 		} catch (Exception e) {
@@ -131,7 +131,7 @@ public class Database {
 	        String dbHost = "localhost";
 	        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 			path = path.replace("\\", "/");
-	        String executeCmd = "cmd.exe /c cd \"C:\\Program Files\\MySQL\\MySQL Workbench 6.3 CE\"  && mysqldump -u" + dbUser + " -p" + dbPass + " -h" + dbHost + " " + dbName + " -r " + path + "SIDC-"+date+".sql";
+	        String executeCmd = "cmd.exe /c cd \"C:\\Program Files\\MySQL\\MySQL Workbench 6.3 CE\"  && mysqldump -u" + dbUser + " -p" + dbPass + " -h" + dbHost + " " + dbName + " -r " + path + "\\SIDC-"+date+".sql";
 	        Process runtimeProcess = Runtime.getRuntime().exec(executeCmd);
 	        int processComplete = runtimeProcess.waitFor();
 	        if (processComplete == 0) {

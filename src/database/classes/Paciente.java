@@ -1,6 +1,9 @@
 package database.classes;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class Paciente {
@@ -37,15 +40,18 @@ public class Paciente {
 		this.telefono = telefono;
 	}
 
-	public Paciente(ArrayList<String[]> userInfo) {
-		// TODO Auto-generated constructor stub
+	public Paciente(ArrayList<String[]> userInfo) throws ParseException {
 		String fields[]  = userInfo.get(0);
 		ID = Integer.parseInt(fields[0]);
-		email = fields[1];
-		nombre = fields[2];
-		apellidos = fields[3];
+		nombre = fields[1];
+		apellidos = fields[2];
+		email = fields[3];
 		direccion = fields[4];
-		telefono = Integer.parseInt(fields[5]);
+		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+		fecha_nacimiento = new Date(formatter.parse(fields[5]).getTime());
+		fecha_creacion =new Date(formatter.parse(fields[6]).getTime());
+		Profesional_Sanitario_ID = Integer.parseInt(fields[7]);
+		telefono = Integer.parseInt(fields[8]);
 	}
 	public int getID() {
 		return ID;

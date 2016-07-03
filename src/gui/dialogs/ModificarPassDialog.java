@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -15,6 +16,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
+import database.Database;
+
 public class ModificarPassDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
@@ -25,7 +28,7 @@ public class ModificarPassDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ModificarPassDialog() {
+	public ModificarPassDialog(String user) {
 		setSize(439, 259);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -89,6 +92,21 @@ public class ModificarPassDialog extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						setVisible(false);
+						byte[] salt = security.Encryption.generateSalt();
+						try {
+							ArrayList<String[]> info = Database.gatherInfo("SELECT * FROM Login");
+							for (String[] i : info) {
+								if (i[0].equals(user)) {
+									String hash = i[1];
+									if(security.Encryption.checkPassword(hash, txtOldPassword.getText())){
+											Database.updateInfo("update login set password = replace(password, '"+ hash +
+														"', '" + security.Encryption.encryptPassword(txtNewPassword.getText(), salt) + "')");
+									}
+								}
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 				});
 				buttonPane.add(okButton);
@@ -107,8 +125,8 @@ public class ModificarPassDialog extends JDialog {
 		}
 	}
 
-	public static void createAndShowDialog() {
-		ModificarPassDialog dialog = new ModificarPassDialog();
+	public static void createAndShowDialog(String user) {
+		ModificarPassDialog dialog = new ModificarPassDialog(user);
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);
 	}

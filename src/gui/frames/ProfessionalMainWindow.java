@@ -57,10 +57,10 @@ public class ProfessionalMainWindow extends JFrame {
 		GestionHistorialesTab tabHistoriales = new GestionHistorialesTab(currentUser);
 		tabbedPane.add("Historiales", tabHistoriales);
 		tabHistoriales.setVisible(true);
-
+/*
 		GestionConsultaTab tabConsulta = new GestionConsultaTab(currentUser);
 		tabbedPane.add("Consulta", tabConsulta);
-		tabConsulta.setVisible(true);
+		tabConsulta.setVisible(true);*/
 		setVisible(true);
 	}
 }

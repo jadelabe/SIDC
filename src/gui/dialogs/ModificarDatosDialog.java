@@ -7,6 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import database.Database;
+
 import javax.swing.JTextField;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -30,7 +33,7 @@ public class ModificarDatosDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ModificarDatosDialog() {
+	public ModificarDatosDialog(String user) {
 		setSize(439, 259);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -99,6 +102,17 @@ public class ModificarDatosDialog extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						setVisible(false);
+						String[] data = getModificaciones();
+						try {
+							System.out.println(user);
+							Database.updateInfo("UPDATE paciente SET nombre='" + data[0] + "' WHERE email LIKE '%" + user + "%'");
+							Database.updateInfo("UPDATE paciente SET apellidos='" + data[1] + "' WHERE email LIKE '%" + user + "%'");
+							Database.updateInfo("UPDATE paciente SET direccion='" + data[2] + "' WHERE email LIKE '%" + user + "%'");
+							Database.updateInfo("UPDATE paciente SET telefono='" + data[3] + "' WHERE email LIKE '%" + user + "%'");
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -127,8 +141,8 @@ public class ModificarDatosDialog extends JDialog {
 		return newData;
 		
 	}
-	public static void createAndShowDialog() {
-		ModificarDatosDialog dialog = new ModificarDatosDialog();
+	public static void createAndShowDialog(String user) {
+		ModificarDatosDialog dialog = new ModificarDatosDialog(user);
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setVisible(true);
 	}
