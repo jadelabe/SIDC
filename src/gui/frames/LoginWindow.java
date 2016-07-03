@@ -1,27 +1,27 @@
 package gui.frames;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.net.URL;
+import java.util.ArrayList;
 
+import javax.swing.Box;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import database.operations.Login;
-
-import javax.swing.JPasswordField;
-import javax.swing.Box;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.net.URL;
-import java.awt.event.ActionEvent;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import database.Database;
 
 public class LoginWindow extends JFrame {
 
@@ -77,27 +77,38 @@ public class LoginWindow extends JFrame {
 		passwordField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
-				if( arg0.getKeyCode() == KeyEvent.VK_ENTER){
+				if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
 					String user = txtUsuario.getText();
 					String pass = new String(passwordField.getPassword());
-
-					int id[] = null;
+					String hash = "";
+					ArrayList<String[]> info;
 					try {
-						id = Login.checkLogin(user, pass);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					if (id[1] == 1) { // Profesional
-						setVisible(false);
-						new ProfessionalMainWindow(id[0]);
-					} else if (id[1] == 2) {
-						setVisible(false);
-						new PacienteMainWindow(id[0]);
-					} else {
-						JOptionPane.showMessageDialog(passwordField, "Usuario o contraseña incorrectos",
-								"Error al Iniciar Sesión", JOptionPane.ERROR_MESSAGE);
+						info = Database.gatherInfo("SELECT * FROM Login");
 
+						for (String[] i : info) {
+							if (i[0].equals(user)) {
+								hash = i[1];
+								if (security.Encryption.checkPassword(hash, pass)) {
+									System.out.println(hash);
+									System.out.println(pass);
+									if (i[2] != null) {
+										// Profesional Sanitario
+										setVisible(false);
+										new ProfessionalMainWindow(Integer.parseInt(i[2]));
+									} else {
+										// Paciente
+										setVisible(false);
+										new PacienteMainWindow(Integer.parseInt(i[2]));
+									}
+								} else {
+									JOptionPane.showMessageDialog(passwordField, "Usuario o contraseña incorrectos",
+											"Error al Iniciar Sesión", JOptionPane.ERROR_MESSAGE);
+								}
+							}
+						}
+
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
 				}
 			}
@@ -108,24 +119,35 @@ public class LoginWindow extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				String user = txtUsuario.getText();
 				String pass = new String(passwordField.getPassword());
-
-				int id[] = null;
+				String hash = "";
+				ArrayList<String[]> info;
 				try {
-					id = Login.checkLogin(user, pass);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				if (id[1] == 1) { // Profesional
-					setVisible(false);
-					new ProfessionalMainWindow(id[0]);
-				} else if (id[1] == 2) {
-					setVisible(false);
-					new PacienteMainWindow(id[0]);
-				} else {
-					JOptionPane.showMessageDialog(btnAceptar, "Usuario o contraseña incorrectos",
-							"Error al Iniciar Sesión", JOptionPane.ERROR_MESSAGE);
+					info = Database.gatherInfo("SELECT * FROM Login");
 
+					for (String[] i : info) {
+						if (i[0].equals(user)) {
+							hash = i[1];
+							if (security.Encryption.checkPassword(hash, pass)) {
+								System.out.println(hash);
+								System.out.println(pass);
+								if (i[2] != null) {
+									// Profesional Sanitario
+									setVisible(false);
+									new ProfessionalMainWindow(Integer.parseInt(i[2]));
+								} else {
+									// Paciente
+									setVisible(false);
+									new PacienteMainWindow(Integer.parseInt(i[2]));
+								}
+							} else {
+								JOptionPane.showMessageDialog(btnAceptar, "Usuario o contraseña incorrectos",
+										"Error al Iniciar Sesión", JOptionPane.ERROR_MESSAGE);
+							}
+						}
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		});
@@ -175,15 +197,6 @@ public class LoginWindow extends JFrame {
 		mntmManualUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				URL url = ClassLoader.getSystemResource("LoginHelp.html");
-				// URL loginHelp =
-				// ClassLoader.getSystemResource("LoginHelp.html");
-				/*
-				 * if (Desktop.isDesktopSupported()) { URI uri = null; try { uri
-				 * = loginHelp.toURI(); } catch (URISyntaxException e1) { //
-				 * TODO Auto-generated catch block e1.printStackTrace(); } try {
-				 * Desktop.getDesktop().browse(uri); } catch (IOException e1) {
-				 * // TODO Auto-generated catch block e1.printStackTrace(); } }
-				 */
 				new HelpWindow("Ayuda", url);
 			}
 		});

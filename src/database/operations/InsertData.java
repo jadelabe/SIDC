@@ -12,22 +12,16 @@ import database.classes.Paciente;
 import database.classes.Profesional_Sanitario;
 
 public class InsertData {
-	/*public static void main(String[] args){
-		try {
-			Profesional_Sanitario ps = new Profesional_Sanitario(-1, "email", "nombre", "apellidos", "direccion", 666);
-			writeProfesionalSanitario(ps);
-			Date date = new Date(1993,07,10);
-			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-			sdf.format(date);
-			Timestamp bday = new Timestamp(date.getTime());
-			Paciente p = new Paciente(-1, "nombre", "apellidos", "email", "direccion", date, date, 1, 666 );
-			writePaciente(p, 1);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}*/
-
+/*
+	public static void main(String[] args) throws Exception{
+		Profesional_Sanitario ps = new Profesional_Sanitario("admin", "nomadmin", "apeadmin", "C/ La piruleta", 666777888);
+		writeProfesionalSanitario(ps);
+		byte[] salt = security.Encryption.generateSalt();
+		String password = security.Encryption.encryptPassword("admin", salt);
+		Login l = new Login("admin", password, 1, 1);
+		writeLoginAdmin(l);
+	}
+*/
 	// Da problemas al escribir de seguido al tener como clave primaria una
 	// marca de tiempo
 	public static boolean writeAntropometricas(Antropometricas a) throws Exception {
@@ -62,8 +56,9 @@ public class InsertData {
 
 	public static boolean writeLoginAdmin(Login l) throws Exception {
 		try {
+			byte[] salt = security.Encryption.generateSalt();
 			return Database.updateInfo("INSERT INTO Login ( email, password, Profesional_Sanitario_ID) VALUES('"
-					+ l.getEmail() + "', '" + l.getPassword() + "', (select ID from Profesional_Sanitario where email = '"
+					+ l.getEmail() + "', '" + security.Encryption.encryptPassword(l.getPassword(), salt) + "', (select ID from Profesional_Sanitario where email = '"
 					+ l.getEmail() + "'))");
 		} catch (Exception e) {
 			System.out.println(e);
@@ -73,9 +68,10 @@ public class InsertData {
 
 	public static boolean writeLoginUser(Login l) throws Exception {
 		try {
+			byte[] salt = security.Encryption.generateSalt();
 			return Database.updateInfo(
 					"INSERT INTO Login ( email, password, Profesional_Sanitario_ID) VALUES('" + l.getEmail() + "', '"
-							+ l.getPassword() + "', (select ID from Paciente where email = '" + l.getEmail() + "'))");
+							+ security.Encryption.encryptPassword(l.getPassword(), salt) + "', (select ID from Paciente where email = '" + l.getEmail() + "'))");
 		} catch (Exception e) {
 			System.out.println(e);
 			return false;
